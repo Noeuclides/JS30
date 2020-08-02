@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        Drum Kit
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+</head>
+
+<body>
+    <div class="keys">
+        <div data-key="65" class="key">
+            <kbd>A</kbd>
+            <span class="sound">Hi Hat</span>
+        </div>
+        <div data-key="83" class="key">
+            <kbd>S</kbd>
+            <span class="sound">Redo</span>
+        </div>
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">Bombo</span>
+        </div>
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">Tom piso</span>
+        </div>
+        <div data-key="81" class="key">
+            <kbd>Q</kbd>
+            <span class="sound">Plato</span>
+        </div>
+        <div data-key="87" class="key">
+            <kbd>W</kbd>
+            <span class="sound">Timbal</span>
+        </div>
+        <div data-key="69" class="key">
+            <kbd>E</kbd>
+            <span class="sound">Timbal 2</span>
+        </div>
+        <div data-key="90" class="key">
+            <kbd>Z</kbd>
+            <span class="sound">Pedal Hi Hat</span>
+        </div>
+    </div>
+    <audio data-key="65" src="sounds/Closed-Hi-Hat-1.wav"></audio>
+    <audio data-key="83" src="sounds/Ensoniq-SQ-1-Side-Stick.wav"></audio>
+    <audio data-key="68" src="sounds/Ensoniq-VFX-SD-Kick.wav"></audio>
+    <audio data-key="70" src="sounds/Floor-Tom-1.wav"></audio>
+    <audio data-key="81" src="sounds/Ensoniq-SQ-1-Ride-Cymbal.wav"></audio>
+    <audio data-key="87" src="sounds/High-Timbales.wav"></audio>
+    <audio data-key="69" src="sounds/Korg-N1R-Low-Timbale.wav"></audio>
+    <audio data-key="90" src="sounds/Korg-N1R-Pedal-Hi-Hat.wav"></audio>
+
+    <script>
+        function playSound(e) {
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+            if (!audio) return;
+
+            audio.currentTime = 0;
+            audio.play();
+            key.classList.add('playing');
+
+        };
+        function removeTransition(e) {
+            if (e.propertyName !== 'transform') return;
+            this.classList.remove('playing');
+        }
+        const keys = document.querySelectorAll('.key');
+        keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+        window.addEventListener('keydown', playSound);
+
+    </script>
+</body>
+
+
+</html>
